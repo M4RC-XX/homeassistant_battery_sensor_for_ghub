@@ -47,7 +47,7 @@ netsh advfirewall firewall add rule name="Logitech G Hub WebSocket Proxy" dir=in
 2. Click the three dots in the top-right corner and select **Custom repositories**.
 3. Paste the repository URL: `https://github.com/M4RC-XX/homeassistant_battery_sensor_for_ghub`
 4. Choose **Integration** as the category and click **Add**.
-5. Find **Battery Sensor for G Hub (Unofficial)** in HACS, click **Download**, and **Restart** Home Assistant.
+5. Find **Battery Sensor for G Hub** in HACS, click **Download**, and **Restart** Home Assistant.
 
 ### Option 2: Manual Installation
 1. Download the latest release archive.
@@ -60,7 +60,7 @@ netsh advfirewall firewall add rule name="Logitech G Hub WebSocket Proxy" dir=in
 
 1. Go to **Settings -> Devices & Services**.
 2. Click **Add Integration** in the bottom-right corner.
-3. Search for **Battery for G Hub (Unofficial)**.
+3. Search for **Battery for G Hub**.
 4. Enter the static IPv4 address of your Windows PC when prompted.
 5. Click Submit. 
 6. *Note:* Trigger your devices (e.g., turn your headset off/on or attach a charging cable) to fire the initial API events. Your devices will instantly build out their entities inside the dashboard.
@@ -73,7 +73,7 @@ netsh advfirewall firewall add rule name="Logitech G Hub WebSocket Proxy" dir=in
 Füge dieses Repository als "Benutzerdefiniertes Repository" in HACS (Kategorie: Integration) mit der URL `https://github.com/M4RC-XX/homeassistant_battery_sensor_for_ghub` hinzu, lade es herunter und starte Home Assistant zwingend neu.
 
 ### Einrichtung
-Gehe auf **Einstellungen -> Geräte & Dienste** und klicke auf **Integration hinzufügen**. Suche nach **Battery for G Hub (Unofficial)**. Trage dort die IP-Adresse deines Windows-PCs ein. 
+Gehe auf **Einstellungen -> Geräte & Dienste** und klicke auf **Integration hinzufügen**. Suche nach **Battery for G Hub**. Trage dort die IP-Adresse deines Windows-PCs ein. 
 *Hinweis:* Schalte deine Peripheriegeräte nach der Einrichtung kurz aus und wieder ein (oder stecke das Ladekabel an), um den initialen Datenstrom zu triggern. Die Geräte und Entitäten erscheinen sofort automatisch.
 
 ---
