@@ -1,0 +1,12 @@
+{
+  "entity": {
+    "sensor": {
+      "battery": {"name": "Battery"},
+      "runtime": {"name": "Estimated Runtime"},
+      "consumption": {"name": "Power Consumption"}
+    },
+    "binary_sensor": {
+      "charging": {"name": "Charging Status"}
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "domain": "ghub_battery",
+  "name": "Battery Sensor for G Hub",
+  "codeowners": ["@M4RC-XX"],
+  "config_flow": true,
+  "dependencies": [],
+  "iot_class": "local_push",
+  "requirements": ["websockets>=11.0"],
+  "version": "1.0.0"
+}

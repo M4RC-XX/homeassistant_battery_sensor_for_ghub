@@ -1,0 +1,12 @@
+{
+  "entity": {
+    "sensor": {
+      "battery": {"name": "Akku"},
+      "runtime": {"name": "Geschätzte Restlaufzeit"},
+      "consumption": {"name": "Stromverbrauch"}
+    },
+    "binary_sensor": {
+      "charging": {"name": "Ladestatus"}
+    }
+  }
+}
