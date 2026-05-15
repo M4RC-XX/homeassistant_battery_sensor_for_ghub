@@ -34,7 +34,8 @@ Open your Windows Terminal (PowerShell or Command Prompt) and execute the follow
 sudo netsh interface portproxy add v4tov4 listenport=9010 listenaddress=0.0.0.0 connectport=9010 connectaddress=127.0.0.1
 
 # Allow incoming TCP traffic on Port 9010 through the Windows Defender Firewall
-sudo netsh advfirewall firewall add rule name="Logitech G Hub WebSocket Proxy" dir=in action=allow protocol=TCP localport=9010```
+sudo netsh advfirewall firewall add rule name="Logitech G Hub WebSocket Proxy" dir=in action=allow protocol=TCP localport=9010
+```
 
 ## 📦 Installation
 
