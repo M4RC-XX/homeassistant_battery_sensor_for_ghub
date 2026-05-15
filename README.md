@@ -31,15 +31,18 @@ Open your Windows Terminal (PowerShell or Command Prompt) and execute the follow
 
 ```powershell
 # Redirect incoming network requests on Port 9010 to G Hub's local interface
-sudo netsh interface portproxy add v4tov4 listenport=9010 listenaddress=0.0.0.0 connectport=9010 connectaddress=127.0.0.1
+netsh interface portproxy add v4tov4 listenport=9010 listenaddress=0.0.0.0 connectport=9010 connectaddress=127.0.0.1
 
 # Allow incoming TCP traffic on Port 9010 through the Windows Defender Firewall
-sudo netsh advfirewall firewall add rule name="Logitech G Hub WebSocket Proxy" dir=in action=allow protocol=TCP localport=9010
+netsh advfirewall firewall add rule name="Logitech G Hub WebSocket Proxy" dir=in action=allow protocol=TCP localport=9010
 ```
 
 ## 📦 Installation
 
 ### Option 1: HACS (Recommended)
+
+<a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=M4RC-XX&repository=homeassistant_battery_sensor_for_ghub&category=integration" target="_blank"><img src="https://my.home-assistant.io/badges/hacs_repository.svg" alt="Open your Home Assistant instance and open a repository inside the Home Assistant Community Store." /></a>
+
 1. Open **HACS** in your Home Assistant dashboard.
 2. Click the three dots in the top-right corner and select **Custom repositories**.
 3. Paste the repository URL: `https://github.com/M4RC-XX/homeassistant_battery_sensor_for_ghub`
