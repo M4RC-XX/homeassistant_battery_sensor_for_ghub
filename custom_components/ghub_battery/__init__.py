@@ -47,17 +47,27 @@ async def ghub_ws_listener(hass: HomeAssistant, entry_id: str, host: str):
 
     while True:
         try:
-            async with websockets.connect(uri, additional_headers=headers, subprotocols=["json"]) as ws:
+            # NEU: ping_interval und ping_timeout erzwingen den Abbruch bei PC-Sleep/Shutdown
+            async with websockets.connect(uri, additional_headers=headers, subprotocols=["json"], ping_interval=20, ping_timeout=20) as ws:
                 _LOGGER.info("Erfolgreich mit G Hub WebSocket verbunden")
                 
+                # 1. Abonniere Batterie-Events
                 await ws.send(json.dumps({
                     "msgId": "1",
                     "verb": "SUBSCRIBE",
                     "path": "/battery/state/changed"
                 }))
                 
+                # 2. NEU: Abonniere Gerätestatus-Änderungen (PC an, aber Gerät verbindet sich erst danach)
                 await ws.send(json.dumps({
                     "msgId": "2",
+                    "verb": "SUBSCRIBE",
+                    "path": "/devices/state/changed"
+                }))
+                
+                # 3. Initiale Liste abfragen
+                await ws.send(json.dumps({
+                    "msgId": "3",
                     "verb": "GET",
                     "path": "/devices/list"
                 }))
@@ -71,7 +81,17 @@ async def ghub_ws_listener(hass: HomeAssistant, entry_id: str, host: str):
                     if not payload:
                         continue
                         
-                    if path == "/devices/list":
+                    # NEU: Wenn ein Gerät nachträglich aufwacht, frage die Geräteliste neu ab
+                    if path == "/devices/state/changed":
+                        state = payload.get("state")
+                        if state == "active":
+                            await ws.send(json.dumps({
+                                "msgId": "refresh_list",
+                                "verb": "GET",
+                                "path": "/devices/list"
+                            }))
+                            
+                    elif path == "/devices/list":
                         device_infos = payload.get("deviceInfos", [])
                         for device in device_infos:
                             dev_id = device.get("id")
@@ -99,5 +119,6 @@ async def ghub_ws_listener(hass: HomeAssistant, entry_id: str, host: str):
         except asyncio.CancelledError:
             break
         except Exception as e:
-            _LOGGER.warning(f"G Hub WS getrennt: {e}. Reconnect in 10 Sekunden...")
+            # NEU: Log-Level auf debug gesenkt, um das Home Assistant Logbuch sauber zu halten
+            _LOGGER.debug(f"G Hub WS getrennt: {e}. Reconnect in 10 Sekunden...")
             await asyncio.sleep(10)
