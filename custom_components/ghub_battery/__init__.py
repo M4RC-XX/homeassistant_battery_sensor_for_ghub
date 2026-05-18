@@ -47,25 +47,21 @@ async def ghub_ws_listener(hass: HomeAssistant, entry_id: str, host: str):
 
     while True:
         try:
-            # NEU: ping_interval und ping_timeout erzwingen den Abbruch bei PC-Sleep/Shutdown
             async with websockets.connect(uri, additional_headers=headers, subprotocols=["json"], ping_interval=20, ping_timeout=20) as ws:
                 _LOGGER.info("Erfolgreich mit G Hub WebSocket verbunden")
                 
-                # 1. Abonniere Batterie-Events
                 await ws.send(json.dumps({
                     "msgId": "1",
                     "verb": "SUBSCRIBE",
                     "path": "/battery/state/changed"
                 }))
                 
-                # 2. NEU: Abonniere Gerätestatus-Änderungen (PC an, aber Gerät verbindet sich erst danach)
                 await ws.send(json.dumps({
                     "msgId": "2",
                     "verb": "SUBSCRIBE",
                     "path": "/devices/state/changed"
                 }))
                 
-                # 3. Initiale Liste abfragen
                 await ws.send(json.dumps({
                     "msgId": "3",
                     "verb": "GET",
@@ -81,7 +77,6 @@ async def ghub_ws_listener(hass: HomeAssistant, entry_id: str, host: str):
                     if not payload:
                         continue
                         
-                    # NEU: Wenn ein Gerät nachträglich aufwacht, frage die Geräteliste neu ab
                     if path == "/devices/state/changed":
                         state = payload.get("state")
                         if state == "active":
@@ -105,7 +100,8 @@ async def ghub_ws_listener(hass: HomeAssistant, entry_id: str, host: str):
                                     "path": f"/battery/{dev_id}/state"
                                 }))
                                 
-                    elif path == "/battery/state/changed" or re.match(r"^/battery/dev[a-zA-Z0-9]+/state$", path):
+                    # Regex angepasst für robustere Erkennung beim Reconnect
+                    elif path == "/battery/state/changed" or re.match(r"^/battery/.+/state$", path):
                         device_id = payload.get("deviceId")
                         
                         if device_id:
@@ -119,6 +115,5 @@ async def ghub_ws_listener(hass: HomeAssistant, entry_id: str, host: str):
         except asyncio.CancelledError:
             break
         except Exception as e:
-            # NEU: Log-Level auf debug gesenkt, um das Home Assistant Logbuch sauber zu halten
             _LOGGER.debug(f"G Hub WS getrennt: {e}. Reconnect in 10 Sekunden...")
             await asyncio.sleep(10)

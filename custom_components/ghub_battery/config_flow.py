@@ -15,6 +15,6 @@ class GHubConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema({
-                vol.Required(CONF_HOST, default="192.168.1.100"): str
+                vol.Required(CONF_HOST, default="192.168.50.10"): str
             })
         )

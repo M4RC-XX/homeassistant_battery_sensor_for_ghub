@@ -1,10 +1,12 @@
 {
   "domain": "ghub_battery",
   "name": "Battery Sensor for G Hub",
+  "version": "1.2.0",
+  "documentation": "https://github.com/M4RC-XX/homeassistant_battery_sensor_for_ghub/",
+  "issue_tracker": "https://github.com/M4RC-XX/homeassistant_battery_sensor_for_ghub/issues",
+  "requirements": ["websockets>=11.0"],
+  "dependencies": [],
   "codeowners": ["@M4RC-XX"],
   "config_flow": true,
-  "dependencies": [],
   "iot_class": "local_push",
-  "requirements": ["websockets>=11.0"],
-  "version": "1.1.0"
 }
